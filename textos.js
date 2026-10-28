@@ -119,7 +119,7 @@ Animamos a aquellos docentes que participen a acudir con la camiseta verde para 
   `,
 
   // Etiqueta de los hospitales destacados (las franjas de concentración se resaltan en la tabla)
-  etiquetaDestacado: 'Habrá concentración en las franjas destacadas. ¡Ven a apoyar!',
+  etiquetaDestacado: 'Este hospital tiene más capacidad o está en ¡maratón de donanción!',
 
   // Mensaje que acompaña al enlace al compartir por WhatsApp (se añade la dirección de la web al final)
   textoCompartir: 'Lo damos todo por la pública: donación de sangre de las docentes en huelga en hospitales 100 % públicos de Madrid. Elige hospital y hora aquí:',

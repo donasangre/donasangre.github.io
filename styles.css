@@ -1,0 +1,318 @@
+/* =====================================================================
+   styles.css — aspecto de la página
+   Los colores generales se cambian en :root
+   ===================================================================== */
+
+/* ===== Colores y medidas generales ===== */
+:root {
+  --fondo: #f6f5f3;
+  --tarjeta: #ffffff;
+  --texto: #1f1f1f;
+  --texto-suave: #5f5f5f;
+  --borde: #e2dfdb;
+  --primario: #b3122e;
+  --primario-oscuro: #8d0e24;
+  /* Hospital destacado: fondo verde y letras amarillas */
+  --destacado-fondo: #2aa664;
+  --destacado-texto: #ffdb5e;
+  --destacado-suave: #fff8d9;
+  /* Semáforo de franjas: verde = hay plazas; naranja = solo lista de espera; rojo = completa */
+  --libre-fondo: #e3f4e6;
+  --libre-texto: #1c6b33;
+  --libre-borde: #9fd4ab;
+  --espera-fondo: #fff0dc;
+  --espera-texto: #9a4a00;
+  --espera-borde: #f4b56c;
+  --cerrada-fondo: #fbe3e3;
+  --cerrada-texto: #a11d1d;
+  --cerrada-borde: #eda4a4;
+  /* Botón de zona elegido */
+  --activo: #2f2f2f;
+  --radio: 10px;
+}
+
+/* Reglas base: tipografía, fondo y que el padding no sume al ancho */
+* { box-sizing: border-box; }
+/* Lo marcado como oculto se oculta siempre, aunque otra regla le dé "display" */
+[hidden] { display: none !important; }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  line-height: 1.5;
+}
+
+/* Contenedor central con márgenes laterales de 16px */
+main, footer { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+main { padding-top: 24px; padding-bottom: 32px; }
+
+/* Títulos */
+h1 { font-size: 1.9rem; margin: 0 0 16px; color: var(--primario); }
+h2 { font-size: 1.3rem; margin: 0 0 8px; }
+
+/* ===== Banner y faldón ===== */
+/* El banner va en un marco con el mismo ancho máximo y márgenes que el faldón (footer) */
+.marco-banner { max-width: 1100px; margin: 0 auto; padding: 16px 16px 0; }
+.banner { width: 100%; text-align: center; }
+.banner img { border-radius: var(--radio); }
+.banner img { display: block; width: 100%; height: auto; }
+/* Hueco reservado cuando aún no hay imagen */
+.banner.hueco {
+  min-height: 120px; display: flex; align-items: center; justify-content: center;
+  background: repeating-linear-gradient(45deg, #ebe8e4, #ebe8e4 10px, #f1eeea 10px, #f1eeea 20px);
+  color: var(--texto-suave); font-size: .9rem; border: 1px solid var(--borde); border-radius: var(--radio);
+}
+.faldon.hueco { min-height: 100px; }
+
+/* ===== Botones ===== */
+.btn-principal {
+  background: var(--primario); color: #fff; border: 0;
+  padding: 12px 24px; font-size: 1rem; font-weight: 600;
+  border-radius: var(--radio); cursor: pointer; text-decoration: none; display: inline-block;
+}
+.btn-principal:hover { background: var(--primario-oscuro); }
+.btn-principal:disabled { opacity: .5; cursor: not-allowed; }
+.btn-secundario {
+  background: #fff; color: var(--texto); border: 1px solid var(--borde);
+  padding: 11px 20px; font-size: 1rem; border-radius: var(--radio); cursor: pointer;
+}
+.btn-secundario:hover { border-color: #c9c4be; }
+
+/* ===== Aviso "ya has reservado" ===== */
+.aviso-reservado {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+  background: #fff8e6; border: 1px solid #f0d58a; border-radius: var(--radio);
+  padding: 14px 18px; margin: 0 0 20px;
+}
+.aviso-reservado p { margin: 0; flex: 1 1 320px; font-weight: 600; }
+
+/* ===== Cabecera: instrucciones (izquierda) y totales en vertical (derecha) ===== */
+.cabecera { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 24px; }
+.cabecera .instrucciones { flex: 1 1 auto; min-width: 0; }
+
+/* ===== Instrucciones ===== */
+.instrucciones {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio);
+  padding: 18px 22px;
+}
+.instrucciones p:first-child { margin-top: 0; }
+.instrucciones :last-child { margin-bottom: 0; }
+
+/* ===== Selector de fecha ===== */
+.barra-fecha { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin: 0 0 16px; }
+.barra-fecha label { font-weight: 600; }
+#estado-actualizacion { color: var(--texto-suave); font-size: .85rem; }
+select {
+  font: inherit; padding: 9px 12px; border-radius: 8px;
+  border: 1px solid var(--borde); background: #fff; min-width: 220px;
+}
+select:disabled { background: #f0eeeb; color: #999; }
+
+/* ===== Selector de zona (botones de opción con aspecto de pestañas) ===== */
+.zonas { border: 0; padding: 0; margin: 0 0 12px; }
+.zonas legend { font-weight: 600; margin-bottom: 8px; padding: 0; }
+.opciones-zona { display: flex; flex-wrap: wrap; gap: 8px; }
+.zona-opcion { position: relative; cursor: pointer; }
+/* Oculta el círculo del radio pero lo mantiene accesible con teclado */
+.zona-opcion input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.zona-opcion span {
+  display: inline-flex; flex-direction: column; align-items: center; min-width: 92px;
+  padding: 8px 16px; border: 1px solid var(--borde); border-radius: 999px; background: #fff;
+  font-weight: 600; line-height: 1.25;
+}
+.zona-opcion small { font-weight: 400; font-size: .78rem; color: var(--texto-suave); font-variant-numeric: tabular-nums; }
+.zona-opcion input:checked + span { background: var(--activo); border-color: var(--activo); color: #fff; }
+.zona-opcion input:checked + span small { color: #d6d6d6; }
+.zona-opcion input:focus-visible + span { outline: 3px solid #9bbcf2; outline-offset: 2px; }
+
+/* Resumen de la zona */
+.resumen-zona { margin: 0 0 8px; font-size: 1.02rem; }
+
+/* Recuadro bajo la tabla con resumen, leyenda y cifras */
+.pie-tabla {
+  width: fit-content; max-width: 100%; margin: 20px auto 24px; text-align: center;
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 14px 22px;
+}
+.pie-tabla .leyenda { justify-content: center; margin: 0 0 6px; }
+
+/* Leyenda */
+.leyenda { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: .88rem; color: var(--texto-suave); margin: 0 0 14px; }
+.muestra { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: -2px; margin-right: 6px; }
+.muestra.libre { background: var(--libre-fondo); border: 1px solid var(--libre-borde); }
+.muestra.espera { background: var(--espera-fondo); border: 1px solid var(--espera-borde); }
+.muestra.cerrada { background: var(--cerrada-fondo); border: 1px solid var(--cerrada-borde); }
+.leyenda-cifras { margin: 0; font-size: .88rem; color: var(--texto-suave); }
+
+.vacio { color: var(--texto-suave); font-style: italic; }
+/* Mensaje de zona sin franjas */
+.sin-franjas {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-left: 6px solid var(--primario);
+  border-radius: var(--radio); padding: 16px 20px; margin: 0;
+}
+.nota { color: var(--texto-suave); font-size: .9rem; }
+.aviso { min-height: 1.5em; color: var(--cerrada-texto); margin: 14px 0 0; }
+
+/* ===== Tabla de la zona ===== */
+/* Permite desplazar la tabla en horizontal si no cabe */
+.tabla-scroll { width: fit-content; max-width: 100%; overflow-x: auto; background: var(--tarjeta); border-radius: var(--radio); border: 1px solid var(--borde); }
+/* table-layout: fixed + anchos de app.js = cada hospital ocupa siempre 250 px */
+.tabla-zona { border-collapse: collapse; table-layout: fixed; }
+
+/* Cabecera de cada hospital */
+.tabla-zona th {
+  background: #2b2b2b; color: #fff; padding: 10px 12px; text-align: left;
+  border-left: 4px solid var(--fondo); vertical-align: top; font-weight: 400; overflow-wrap: break-word;
+}
+.tabla-zona th:first-child, .tabla-zona td:first-child { border-left: 0; }
+.tabla-zona th.destacado { background: var(--destacado-fondo); color: #fff; }
+.tabla-zona th.destacado .nombre-hospital { color: var(--destacado-texto); font-size: 1.1rem; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.tabla-zona th.destacado .enlace-mapa { color: var(--destacado-texto); }
+.etiqueta-destacado {
+  display: inline-block; background: var(--destacado-texto); color: #14532f; font-size: .72rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: .03em;
+  padding: 2px 8px; border-radius: 999px; margin-bottom: 6px;
+}
+.nombre-hospital { display: block; font-weight: 700; font-size: 1.02rem; }
+.enlace-mapa { color: #ffd4da; font-size: .8rem; }
+.totales-hospital { display: flex; gap: 12px; margin-top: 6px; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.totales-hospital strong { font-size: .95rem; }
+
+/* Celdas de franja */
+.tabla-zona td { padding: 4px 8px; border-top: 1px solid var(--borde); vertical-align: middle; }
+.tabla-zona td.hora { font-variant-numeric: tabular-nums; white-space: nowrap; border-left: 4px solid var(--fondo); }
+.tabla-zona td.destacado { background: var(--destacado-suave); }
+/* Franjas de concentración: con los colores del destacado, bien visibles */
+.tabla-zona td.franja-destacada { background: var(--destacado-fondo); }
+.tabla-zona td.hora.franja-destacada { color: var(--destacado-texto); font-weight: 700; text-shadow: 0 1px 2px rgba(0,0,0,.35); }
+.tabla-zona td.franja-destacada .plazas { box-shadow: 0 0 0 2px var(--destacado-texto); }
+.tabla-zona td.vacia { background: #faf9f8; }
+
+/* Botón de cada franja */
+.plazas {
+  width: 100%; padding: 5px 10px; border-radius: 6px; font: inherit; text-align: center;
+  font-variant-numeric: tabular-nums; cursor: pointer; display: flex; flex-direction: column; line-height: 1.2;
+}
+.plazas { min-height: 44px; justify-content: center; }
+.plazas .cifra { font-weight: 700; }
+/* "+N en espera": apagado si es 0, resaltado si hay gente */
+.plazas .en-espera { font-size: .76rem; white-space: nowrap; opacity: .6; }
+.plazas .en-espera.hay { opacity: 1; font-weight: 700; color: #fff; background: #d9730d; border-radius: 999px; padding: 0 6px; align-self: center; margin-top: 2px; }
+.plazas.libre { background: var(--libre-fondo); color: var(--libre-texto); border: 1px solid var(--libre-borde); }
+.plazas.espera { background: var(--espera-fondo); color: var(--espera-texto); border: 1px solid var(--espera-borde); }
+.plazas.cerrada { background: var(--cerrada-fondo); color: var(--cerrada-texto); border: 1px solid var(--cerrada-borde); cursor: not-allowed; }
+.plazas:not(:disabled):hover { filter: brightness(.95); }
+/* Modo solo consulta (ya reservado): mismos colores pero sin aspecto pulsable */
+.plazas.solo-ver { cursor: default; }
+
+/* ===== Ventana de confirmación ===== */
+dialog {
+  border: 0; border-radius: 14px; padding: 24px;
+  width: min(520px, calc(100% - 32px)); box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+dialog::backdrop { background: rgba(0,0,0,.45); }
+.pregunta { font-size: 1.1rem; margin-top: 0; }
+.etiqueta { font-weight: 600; margin: 18px 0 6px; }
+.cantidades { display: flex; gap: 8px; flex-wrap: wrap; }
+.cantidad {
+  width: 52px; height: 44px; font: inherit; font-weight: 600; border-radius: 8px;
+  border: 1px solid var(--borde); background: #fff; cursor: pointer;
+}
+.cantidad[aria-pressed="true"] { background: var(--activo); border-color: var(--activo); color: #fff; }
+.cantidad:disabled { opacity: .35; cursor: not-allowed; }
+#captcha { margin-top: 16px; min-height: 65px; }
+.acciones { display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+
+/* ===== Pantalla final ===== */
+.tarjeta-reserva {
+  background: var(--tarjeta); border: 1px solid var(--borde); border-left: 6px solid var(--primario);
+  border-radius: var(--radio); padding: 20px 24px; margin: 0 0 20px;
+}
+.tarjeta-reserva dl { display: grid; grid-template-columns: max-content 1fr; gap: 8px 20px; margin: 0; }
+.tarjeta-reserva dt { color: var(--texto-suave); }
+.tarjeta-reserva dd { margin: 0; font-weight: 600; }
+.tarjeta-reserva dd a { font-weight: 400; margin-left: 6px; color: var(--primario); }
+.final-espera { margin: 14px 0 0; color: var(--espera-texto); font-weight: 600; }
+.importante {
+  background: #fff8e6; border: 1px solid #f0d58a; border-radius: var(--radio);
+  padding: 16px 20px; margin: 0 0 24px;
+}
+.calendario { display: flex; flex-wrap: wrap; gap: 12px; margin: 12px 0 28px; }
+.ver-registro { border-top: 1px solid var(--borde); padding-top: 20px; }
+.ver-registro .nota { margin: 8px 0 0; }
+
+/* ===== Pie ===== */
+footer { padding-bottom: 40px; }
+
+/* ===== Totales generales (recuadro centrado antes de la tabla) ===== */
+.totales {
+  flex: 0 0 210px; border-collapse: separate; border-spacing: 0; background: var(--tarjeta);
+  border: 2px solid var(--texto); border-radius: var(--radio); overflow: hidden; text-align: center;
+}
+.totales th { background: var(--texto); color: #fff; font-size: .95rem; padding: 8px 12px; }
+.totales td { padding: 12px 16px; border-top: 1px solid var(--borde); }
+.totales tr:first-child td { border-top: 0; }
+.totales strong { display: block; font-size: 1.9rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.totales span { font-size: .88rem; color: var(--texto-suave); }
+
+/* ===== Desplegable "cuándo no se puede donar" ===== */
+.instrucciones h3 { font-size: 1.05rem; margin: 16px 0 6px; }
+.no-donar { margin-top: 14px; border: 1px solid var(--borde); border-radius: 8px; background: #fafaf8; }
+.no-donar summary { cursor: pointer; padding: 10px 14px; font-weight: 600; }
+.no-donar summary:hover { background: #f1efec; }
+.no-donar[open] summary { border-bottom: 1px solid var(--borde); }
+.no-donar > :not(summary) { margin-left: 14px; margin-right: 14px; }
+
+/* ===== Móvil ===== */
+@media (max-width: 600px) {
+  h1 { font-size: 1.55rem; }
+  select { width: 100%; }
+  .totales td { padding: 8px 12px; }
+  .totales strong { font-size: 1.5rem; }
+  .tarjeta-reserva dl { grid-template-columns: 1fr; gap: 2px; }
+  .tarjeta-reserva dd { margin-bottom: 8px; }
+}
+
+/* Pantallas medianas: instrucciones y totales uno debajo del otro */
+@media (max-width: 760px) {
+  .cabecera { flex-direction: column; align-items: stretch; }
+  /* En pantallas estrechas las tres cifras van en fila para no ocupar alto */
+  .totales { flex-basis: auto; width: 100%; display: block; }
+  .totales thead, .totales thead tr, .totales th { display: block; }
+  .totales tbody { display: flex; }
+  .totales tbody tr { flex: 1 1 0; display: block; }
+  .totales td { display: block; border-top: 0; border-left: 1px solid var(--borde); padding: 8px 6px; }
+  .totales tbody tr:first-child td { border-left: 0; }
+}
+
+/* ===== Código de reserva en la pantalla final ===== */
+.codigo { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.25rem; letter-spacing: .08em; user-select: all; }
+.btn-copiar {
+  margin-left: 10px; font: inherit; font-size: .85rem; padding: 3px 10px; border-radius: 6px;
+  border: 1px solid var(--borde); background: #fff; cursor: pointer; vertical-align: 2px;
+}
+.nota-codigo { margin: 12px 0 0; font-weight: 600; }
+
+/* ===== Caja "Liberar mi espacio" (en las dos vistas) ===== */
+.liberar {
+  width: calc(100% - 32px); max-width: 1068px; margin: 0 auto 24px; text-align: center;
+  background: var(--tarjeta); border: 1px solid var(--borde); border-radius: var(--radio); padding: 16px 20px;
+}
+.liberar > p:first-child { margin: 0 0 10px; }
+.liberar-fila { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.liberar input {
+  font: inherit; font-family: ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; letter-spacing: .06em;
+  padding: 9px 12px; border: 1px solid var(--borde); border-radius: 8px; width: 220px; max-width: 100%;
+}
+.mensaje-liberar { margin: 10px 0 0; min-height: 1.5em; }
+.mensaje-liberar.ok { color: var(--libre-texto); font-weight: 600; }
+.mensaje-liberar.error { color: var(--cerrada-texto); font-weight: 600; }
+/* Oculta un texto a la vista pero lo deja para lectores de pantalla */
+.solo-lectores { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* ===== Botón de compartir por WhatsApp ===== */
+.btn-whatsapp {
+  display: inline-block; background: #25d366; color: #fff; font-weight: 700; text-decoration: none;
+  padding: 9px 16px; border-radius: 999px; margin: 4px 0 12px;
+}
+.btn-whatsapp:hover { background: #1ebe5b; }

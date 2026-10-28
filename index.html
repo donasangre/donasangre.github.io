@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <!-- Codificación de caracteres (tildes, eñes) -->
+  <meta charset="utf-8">
+  <!-- Ajusta la página al ancho de la pantalla en móviles -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Título de la pestaña (se sustituye por el de textos.js al cargar) -->
+  <title>Donación de sangre</title>
+
+  <!-- Hoja de estilos de la página -->
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- Librería oficial de Supabase (crea el objeto global "supabase") -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Captcha de Cloudflare Turnstile (render=explicit: lo dibujamos solo cuando hace falta) -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+
+  <!-- Claves y opciones (este archivo es tuyo: no se sustituye en las actualizaciones) -->
+  <script src="config.js"></script>
+  <!-- Textos editables de la página -->
+  <script src="textos.js"></script>
+  <!-- Lógica de la página (defer: se ejecuta cuando todo el HTML está cargado) -->
+  <script src="app.js" defer></script>
+</head>
+<body>
+
+  <!-- ================= BANNER SUPERIOR ================= -->
+  <!-- Va dentro de un marco con el mismo ancho máximo que el faldón -->
+  <header class="marco-banner">
+    <div id="banner" class="banner" role="img"></div>
+  </header>
+
+  <main>
+
+    <!-- ================= VISTA PRINCIPAL (TABLAS) ================= -->
+    <section id="vista-principal">
+
+      <!-- Título general -->
+      <h1 id="titulo"></h1>
+
+      <!-- Aviso que aparece si este navegador ya hizo su reserva -->
+      <div id="aviso-ya-reservado" class="aviso-reservado" hidden>
+        <p id="texto-ya-reservado"></p>
+        <button type="button" class="btn-secundario" id="btn-volver-final">Ver mi reserva</button>
+      </div>
+
+      <!-- Cabecera compacta: instrucciones a la izquierda y totales en vertical a la derecha -->
+      <div class="cabecera">
+        <!-- Instrucciones de donación (texto en textos.js) -->
+        <section class="instrucciones">
+          <h2 id="instrucciones-titulo"></h2>
+          <div id="instrucciones-texto"></div>
+        </section>
+
+        <!-- Totales generales: apuntadas, con plaza y en lista de espera -->
+        <table id="totales" class="totales" hidden></table>
+      </div>
+
+      <!-- Selector de fecha y hora de la última actualización -->
+      <div class="barra-fecha">
+        <label for="selector-fecha">Fecha</label>
+        <select id="selector-fecha" disabled><option>Cargando…</option></select>
+        <span id="estado-actualizacion"></span>
+      </div>
+
+      <!-- Selector de zona (botones de opción; solo aparecen las zonas con hospitales) -->
+      <fieldset id="zonas" class="zonas" hidden>
+        <legend>Zona</legend>
+        <div id="opciones-zona" class="opciones-zona"></div>
+      </fieldset>
+
+      <!-- Tabla de la zona elegida -->
+      <div id="tabla-zona"><p class="vacio">Cargando ocupación…</p></div>
+
+      <!-- Recuadro bajo la tabla: resumen de la zona, leyenda de colores y significado de las cifras -->
+      <div class="pie-tabla">
+        <p id="resumen-zona" class="resumen-zona"></p>
+        <p class="leyenda">
+          <span><span class="muestra libre"></span>Con plazas libres</span>
+          <span><span class="muestra espera"></span>Completa, pero con lista de espera</span>
+          <span><span class="muestra cerrada"></span>Completa</span>
+        </p>
+        <p class="leyenda-cifras">Cifras: reservas con plaza / plazas totales</p>
+      </div>
+    </section>
+
+    <!-- ================= PANTALLA FINAL ================= -->
+    <section id="vista-final" hidden>
+      <h1>¡Reserva confirmada!</h1>
+      <p id="final-ya-reservado" class="nota" hidden>Ya tienes una reserva hecha desde este navegador.</p>
+
+      <!-- Datos de la reserva (el código se genera pero no se muestra) -->
+      <div class="tarjeta-reserva">
+        <dl>
+          <dt>Hospital</dt>  <dd id="final-hospital"></dd>
+          <dt>Dirección</dt> <dd><span id="final-direccion"></span> <a id="final-mapa" target="_blank" rel="noopener">Ver en Google Maps</a></dd>
+          <dt>Día</dt>       <dd id="final-fecha"></dd>
+          <dt>Hora</dt>      <dd id="final-hora"></dd>
+          <dt>Personas</dt>  <dd id="final-personas"></dd>
+          <dt>Código</dt>
+          <dd>
+            <span id="final-codigo" class="codigo"></span>
+            <button type="button" id="btn-copiar-codigo" class="btn-copiar">Copiar código</button>
+          </dd>
+        </dl>
+        <p id="nota-codigo" class="nota-codigo"></p>
+        <p id="final-espera" class="final-espera" hidden></p>
+      </div>
+
+      <!-- Aviso importante (texto en textos.js) -->
+      <div id="final-importante" class="importante"></div>
+
+      <!-- Añadir al calendario -->
+      <h2>Añádelo a tu calendario</h2>
+      <div class="calendario">
+        <a id="enlace-google" class="btn-principal" target="_blank" rel="noopener">Google Calendar</a>
+        <button type="button" id="btn-ics" class="btn-secundario">Apple / Outlook (.ics)</button>
+      </div>
+
+      <!-- Volver a las tablas (solo para consultar) -->
+      <div class="ver-registro">
+        <button type="button" id="btn-ver-registro" class="btn-secundario">Ver cómo va el registro</button>
+        <p id="nota-ver-registro" class="nota"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= LIBERAR MI ESPACIO (visible en las dos vistas) ================= -->
+  <section class="liberar" aria-labelledby="texto-liberar">
+    <p id="texto-liberar"></p>
+    <div class="liberar-fila">
+      <label for="codigo-liberar" class="solo-lectores">Número de reserva</label>
+      <input id="codigo-liberar" type="text" autocomplete="off" spellcheck="false" placeholder="Número de reserva">
+      <button type="button" id="btn-liberar" class="btn-secundario">Liberar mi espacio</button>
+    </div>
+    <p id="mensaje-liberar" class="mensaje-liberar" role="status"></p>
+  </section>
+
+  <!-- ================= FALDÓN ================= -->
+  <footer>
+    <div id="faldon" class="banner faldon" role="img"></div>
+  </footer>
+
+  <!-- ================= VENTANA: CONFIRMACIÓN ================= -->
+  <dialog id="dialogo-confirmar" aria-labelledby="texto-confirmar">
+    <!-- Pregunta "¿Quieres reservar en…?" -->
+    <p id="texto-confirmar" class="pregunta"></p>
+
+    <!-- Número de personas -->
+    <p class="etiqueta">¿Cuántas personas vais a donar en esta franja?</p>
+    <div id="cantidades" class="cantidades" role="group" aria-label="Número de personas"></div>
+    <p id="nota-cantidad" class="nota"></p>
+
+    <!-- Captcha (solo si este navegador aún no está verificado) -->
+    <div id="captcha"></div>
+
+    <!-- Errores -->
+    <p id="error-confirmar" class="aviso" role="alert"></p>
+
+    <!-- Botones -->
+    <div class="acciones">
+      <button type="button" class="btn-secundario" id="btn-cancelar">Cancelar</button>
+      <button type="button" class="btn-principal" id="btn-si" disabled>Sí, reservar</button>
+    </div>
+  </dialog>
+
+</body>
+</html>

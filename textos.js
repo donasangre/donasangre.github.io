@@ -83,7 +83,7 @@ Animamos a aquellos docentes que participen a acudir con la camiseta verde para 
     <details class="no-donar">
       <summary id="disclaimer"><span style="color: #F47174;"> Esta web no es una herramienta de inscripción oficial de los hospitales.</span> <em>(Pulsa para ver.)</em></summary>
 	
-     <p> Esta web ha sido creada por docentes para facilitar la jornada averiguando y estimando cuánta gente pueden atender cada hora en cada hora. Eso implica que habrá errores o cambios durante el día que pueden afectar tu donación. 
+     <p> Esta web ha sido creada por docentes para facilitar la jornada averiguando y estimando cuánta gente pueden atender cada hora en cada centro. Eso implica que habrá errores o cambios durante el día que pueden afectar tu donación. 
 <p>El resgistrarte aquí no te garantiza poder donar, pero sí facilita que la gente vaya de forma escalonada y más organizada. Por ello, si al final no pudieras donar, te pedimos disculpas y comprensión y te agradecemos tu apoyo. Tu esfuerzo es importante para visibilizar las condiciones educativas de Madrid. Y por favor, no te desanimes y <strong>dona cualquier otro día</strong>, pero no dejes de hacerlo. Las donaciones se necesitan de forma sostenida. Toda <strong>la Comunidad de Madrid te necesita.</strong> </p>
 <p>Si eres un hospital y detectas algún error en plazas por hora, horarios, etc. Sentimos el error, pero por favor escribe a ml.tic.tecno@gmail.com desde tu cuenta oficial y cuéntanos qué debemos corregir.</p>	
 

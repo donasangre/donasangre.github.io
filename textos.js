@@ -29,7 +29,7 @@ window.TEXTOS = {
   //   - <details>: bloque que se abre al pulsar; <summary> es la frase que se ve cerrada
   //   - <a data-whatsapp>: botón de compartir por WhatsApp (la web añade el enlace a esta página)
   instruccionesHTML: `
-	<h1>Donación de sangre colectiva por la educación pública de la Comunidad de Madrid</h1>
+	<h1>Organízate como docente y ¡dona!</h1>
 
 <p>
 Desde la comunidad docente en huelga hemos organizado una donación colectiva de sangre que inicialmente estaba prevista para comenzar el 3 de noviembre, pero, ante el trágico accidente ferroviario ocurrido en la provincia de Toledo, hemos considerado necesario adelantarla al miércoles 28 de octubre.

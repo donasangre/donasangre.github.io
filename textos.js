@@ -32,7 +32,7 @@ window.TEXTOS = {
 	<h1>Organízate como docente y ¡dona!</h1>
 
 <p>
-Desde la comunidad docente en huelga hemos organizado una donación colectiva de sangre que inicialmente estaba prevista para comenzar el 3 de noviembre, pero, ante el trágico accidente ferroviario ocurrido en la provincia de Toledo, hemos considerado necesario adelantarla al miércoles 28 de octubre.
+Desde la comunidad docente en huelga hemos organizado una donación colectiva de sangre que inicialmente estaba prevista para comenzar el 3 de noviembre, pero ante el trágico accidente ferroviario ocurrido en la provincia de Toledo, hemos considerado necesario adelantarla al miércoles 28 de octubre.
 </p>
 <p>
 Hemos creado un sistema de registro según la capacidad de los puntos de donación para que todas las personas participen sin saturar los centros y distribuyendo las donaciones de forma escalonada. Esta planificación también es importante en el caso de la donación de plaquetas, que requiere donaciones recientes y distribuidas en el tiempo.
